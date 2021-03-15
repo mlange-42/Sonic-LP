@@ -17,16 +17,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install Yarner and mdBook
+      - name: Install Yarner
         run: |
           curl -LsSf https://github.com/mlange-42/yarner/releases/download/${YARNER_VERSION}/yarner-${YARNER_VERSION}-linux-amd64.tar.gz | tar xzf -
           curl -LsSf https://github.com/mlange-42/yarner-block-links/releases/download/${YARNER_BL_VERSION}/yarner-block-links-${YARNER_BL_VERSION}-linux-amd64.tar.gz | tar xzf -
+      - name: Install mdBook
+        run: |
           curl -LsSf https://github.com/rust-lang/mdBook/releases/download/v${MDBOOK_VERSION}/mdbook-v${MDBOOK_VERSION}-x86_64-unknown-linux-gnu.tar.gz | tar xzf -
           curl -LsSf https://github.com/badboy/mdbook-toc/releases/download/${MDBOOK_TOC_VERSION}/mdbook-toc-${MDBOOK_TOC_VERSION}-x86_64-unknown-linux-gnu.tar.gz | tar xzf -
+      - name: Set path
+        run: |
           echo $(pwd) >> $GITHUB_PATH
-      - name: Run mdbook
+      - name: Run Yarner
         run: |
           yarner --clean
+      - name: Run mdBook
+        run: |
           mdbook build
       - name: Deploy to GitHub Pages
         if: success()
