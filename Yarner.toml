@@ -32,3 +32,5 @@ eof_newline = true
     block_start = "<@"
     block_next = "<@>"
     block_end = "@>"
+
+[plugin.block-links]

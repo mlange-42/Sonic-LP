@@ -1,3 +1,7 @@
 .abctext {
     display:none;
 }
+
+blockquote > p {
+    margin: 8px 0;
+}

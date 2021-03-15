@@ -18,10 +18,20 @@ In Sonic Pi code we get the following, where `1` is the length of a quarter note
 
 ```ruby
 #- file:Dubstep/Morricone-001.rb
-# First bar
-b11 = [[:a3, :d4, :a3, :d4, :a3, :f3], [0.25, 0.25, 0.25, 0.25, 2, 1]]
-b12 = [[:a3, :d4, :a3, :d4, :a3, :g3], [0.25, 0.25, 0.25, 0.25, 2, 1]]
-# Second bar
+# ==> First bar.
+# ==> Second bar.
+```
+
+```ruby
+#- First bar
+b21 = [[:g3, :d3], [1, 3]]
+b22 = [[:g3, :d4], [1, 3]]
+b23 = [[:e3, :d3, :c3], [0.5, 0.5, 3]]
+b24 = [[:d3], [4]]
+```
+
+```ruby
+#- Second bar
 b21 = [[:g3, :d3], [1, 3]]
 b22 = [[:g3, :d4], [1, 3]]
 b23 = [[:e3, :d3, :c3], [0.5, 0.5, 3]]
