@@ -13,6 +13,8 @@ build-dir = "public"
 default-theme = "Rust"
 additional-js = ["css-js/abcjs-plugin-min.js"]
 additional-css = ["css-js/custom.css"]
+git-repository-url = "https://github.com/mlange-42/Sonic-LP"
+git-repository-icon = "fa-github"
 
 [preprocessor.toc]
 command = "mdbook-toc"
