@@ -1,0 +1,21 @@
+[book]
+authors = ["Martin Lange"]
+language = "en"
+multilingual = false
+src = "book"
+title = "Sonic Pi - Literate Programming"
+description = "Coding for Sonic PI using Yarner Literate Programming"
+
+[build]
+build-dir = "public"
+
+[output.html]
+default-theme = "Rust"
+additional-js = ["css-js/abcjs-plugin-min.js"]
+additional-css = ["css-js/custom.css"]
+
+[preprocessor.toc]
+command = "mdbook-toc"
+marker = "[[_TOC_]]"
+renderer = ["html"]
+max-level = 2
