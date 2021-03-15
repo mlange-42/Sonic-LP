@@ -7,7 +7,7 @@ on:
 
 jobs:
   publish:
-    name: Publish guide
+    name: Publish book
     env:
       YARNER_VERSION: 0.5.2
       YARNER_BL_VERSION: 0.1.2
