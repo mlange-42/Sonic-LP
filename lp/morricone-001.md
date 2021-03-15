@@ -2,6 +2,10 @@
 
 [[_TOC_]]
 
+## Idea
+
+## Main theme
+
 The main bassline uses the first 8 bars of Ennio Morricone's famous "The Good, the Bad and the Ugly":
 
 X: 1
