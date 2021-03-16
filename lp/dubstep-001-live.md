@@ -29,6 +29,16 @@ E6 E10|E6 E10|E6 E10|E6 E10|
 "snare1"z8 nd7 nd1|"snare2"z8 nd3 nd4 nd|\\
 "snare1"z8 nd7 nd1|"snare4"z10 nd3 nd2 nd|
 
+As rhythms, the bass drum and snare bars look like this:
+
+```
+Bass dr. |o-----o---------|
+Snare 1  |--------x------x|
+Snare 2  |--------x--x---x|
+Snare 3  |----------x---x-|
+Snare 4  |----------x--x-x|
+```
+
 The bass drum is realized as a simple Live Loop.
 
 ```ruby
@@ -45,10 +55,14 @@ Snare rhythm and volumes are given as arrays.
 
 ```ruby
 #- Snare rhythm
-snare1 = [[2, 1.75, 0.25], [0, 1, 0.8]]
-snare2 = [[2, 0.75, 1.0, 0.25], [0, 1, 1, 0.8]]
-snare3 = [[2.5, 1.0, 0.5], [0, 1, 1]]
-snare4 = [[2.5, 0.75, 0.5, 0.25], [0, 1, 0.8, 1]]
+snare1 = [[  2,  1.75, 0.25],         # sleep time after sample (beats)
+          [  0,     1,  0.8]]         # sample amplitude
+snare2 = [[  2,  0.75,  1.0,  0.25],
+          [  0,     1,    1,   0.8]]
+snare3 = [[2.5,   1.0,  0.5],
+          [  0,     1,    1]]
+snare4 = [[2.5,  0.75,  0.5,  0.25],
+          [  0,     1,  0.8,     1]]
 ```
 
 Cymbals play 16th notes, with some left out with a probability of 10%
@@ -66,8 +80,10 @@ Due to the repetitions, we only need two different patterns in Sonic Pi's notati
 
 ```ruby
 #- Bass notes
-bass1 = [[:a1, :c2, :fs1], [4, 2, 2]]
-bass2 = [[:a1, :fs1, :f1], [4, 2, 2]]
+bass1 = [[:a1,  :c2, :fs1],  # notes
+         [  4,    2,    2]]  # durations (beats)
+bass2 = [[:a1, :fs1,  :f1],
+         [  4,    2,    2]]
 ```
 
 ## Appendix
