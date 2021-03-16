@@ -3,5 +3,5 @@
 @[Introduction](./introduction.md)
 
 - @[First steps](./first-steps.md)
-  - @[Dubstep 001](./dubstep-001.md)
+  - @[Live Dubstep 001](./dubstep-001-live.md)
   - @[Morricone 001](./morricone-001.md)
