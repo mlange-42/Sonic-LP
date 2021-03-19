@@ -7,7 +7,6 @@
 ```ruby
 #- Setup
 use_bpm 125
-offset = 0
 ```
 
 ## Instruments
@@ -120,6 +119,12 @@ live_loop :bass, sync: :main do
 end
 ```
 
+X: 1
+M: 4/4
+L: 1/16
+E2E2 E2E2 E2E2 E2E2|B2B2 B2B2 B2B2 B2B2|d2d2 d2d2 d2d2 B2B2|G2G2 G2G2 A2A2 A2A2|
+E2E2 E2E2 E2E2 E2E2|B2B2 B2B2 B2B2 B2B2|dddd dddd dddd BBBB|AAAA AAAA ((3GGG) ((3GGG)|
+
 ### Bells
 
 X: 1
@@ -171,6 +176,7 @@ live_loop :main, delay: 0.01 do
   sleep 4 * 4
 end
 
+offset = 0
 ##########################  0        8        16       24       32       40       48       56       64
 bell_amp     =  str_scale("|33334343|----6655|----6666|----6688|XXXX8876|XXXX8876|88888876|X7X7X786|6666----|", max: 0.2 )
 bell_shift   = str_select("|22111-1-|----11--|11111111|11111111|1111----|1111----|--------|1-1-1-1-|--------|", [0, -12, -24])

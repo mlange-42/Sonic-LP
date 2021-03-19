@@ -20,4 +20,4 @@ git-repository-icon = "fa-github"
 command = "mdbook-toc"
 marker = "[[_TOC_]]"
 renderer = ["html"]
-max-level = 2
+max-level = 3
