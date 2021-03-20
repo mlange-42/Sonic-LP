@@ -24,7 +24,7 @@ files = ["SUMMARY.md"]
 entrypoint = "Main"
 
 [language.rb]
-clear_blank_lines = true
+clear_blank_lines = false
 eof_newline = true
 
     [language.rb.block_labels]
