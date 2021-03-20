@@ -1,10 +1,22 @@
 # House bounce
 
+After discovering [Sonic Pi](https://sonic-pi.net/) a week before,
+and some playing with it in Live Coding, I decided to code a first complete track.
+
+Starting from a simple bass line, it developed into a bouncy House tune. Listen here:
+
 <iframe width="100%" height="165" scrolling="no" frameborder="no" allow="autoplay" src="https://thefuture.fm/track/862/house-experiment-001-sonic-pi/embed"></iframe>
+
+The track uses only built-in samples and synths of Sonic Pi, so the code should
+work without any additional setup.
+
+**Contents**
 
 [[_TOC_]]
 
 ## Tempo
+
+With 125 BMP, I decided to go for the upper range of typical House tracks.
 
 ```ruby
 #- Setup
@@ -13,7 +25,17 @@ use_bpm 125
 
 ## Instruments
 
+The track is played by a rather small combo of instruments:
+drums, a bass line, and playful bell or xylophone-like melody.
+
+Notes and Sonic Pi code for each of the instruments are presented and explained
+in the following sections.
+
 ### Drums
+
+I used a standard House drums arrangement with the bass drum playing a
+4-to-the-floor rhythm. The snare plays on every second beat, while cymbals
+play between beats.
 
 X: 1
 M: 4/4
@@ -23,19 +45,36 @@ U:n=!style=x!
 V: BD name="Bass drum"
 V: SN name="Snare"
 V: CY name="Cymbal"
-[V:BD] E4 E4 E4 E4|
+[V:BD] F4 F4 F4 F4|
 [V:SN] z4 nG4 z4 nG4|
 [V:CY] z2 nf2 z2 nf2 z2 nf2 z2 nf2|
+
+In the code, I use the function [play_rhythm_sample](#play_rhythm_sample),
+which allows me to easily define drum patterns as strings of e.g. 8th notes.
+The bass drum pattern is commented out, as we trigger beats individually (see below).
 
 ```ruby
 #- Drums
 # bd_rhythm =    "x-x-x-x-"
 drum_rhythm =    "--x---x-"
 cymbals_rhythm = "-x-x-x-x"
+
+# ==> Bass drum.
+# ==> Snare.
+# ==> Cymbal.
 ```
 
+Next, I present the code that actually plays these patterns.
+I use a `live_loop` for each instrument. At the start of each live loops,
+you will see lines like `amp = bd_amp[tick + offset]`.
+Here, we get parameters like the volume of the instrument over the course of the track.
+Section [Title structure](#title-structure) presents how this is actually implemented.
+
+For the bass drum, I use the sample `:bd_haus`. It is played every quarter note,
+with a low pass filter. The filter is set to a higher cutoff on every second beat.
+
 ```ruby
-#- Drums
+#- Bass drum
 live_loop :bd, sync: :main do
   amp = bd_amp[tick + offset]
   8.times do
@@ -45,7 +84,14 @@ live_loop :bd, sync: :main do
     sleep 1
   end
 end
+```
 
+As a snare replacement, I use the sample `:elec_twip`, and play the
+pattern presented above. To make the sound more snappy, I cut off
+the release part of the sample (with `finish: 0.1`)
+
+```ruby
+#- Snare
 live_loop :drums, sync: :main do
   amp = drums_amp[tick + offset]
   4.times do
@@ -53,8 +99,15 @@ live_loop :drums, sync: :main do
     play_rhythm_sample :elec_twip, 0.5, drum_rhythm, amp: amp
   end
 end
+```
 
-live_loop :cymbals, sync: :main do
+Finally, I used the closed cymbal sample `:drum_cymbal_closed` to play the
+respective pattern (i.e. between beats). Again, I cut the release part for a
+more snappy sound,. Further, I added a high pass filter.
+
+```ruby
+#- Cymbal
+live_loop :cymbal, sync: :main do
   amp = cymbal_amp[tick + offset]
   4.times do
     use_sample_defaults hpf: 100, finish: 0.15, amp: amp
@@ -65,13 +118,16 @@ end
 
 ### Bass
 
+After some playing with the F minor pentatonic scale, I came up with this base
+melody for the bass line:
+
 X: 1
 M: 4/4
 L: 1/4
 E4|B4|d3B1|G2A2|\\
 E4|B4|d3B1|A2G2|
 
-Sonic Pi notes:
+Here, the melody is expressed in Sonic Pi notes and durations (in beats):
 
 ```ruby
 #- Bass
@@ -132,7 +188,7 @@ E2E2 E2E2 E2E2 E2E2|B2B2 B2B2 B2B2 B2B2|dddd dddd dddd BBBB|AAAA AAAA ((3GGG) ((
 X: 1
 M: 4/4
 L: 1/16
-E2EG EGE2 E2GE E2D2|E2G2 EGE2 E2GE E2D2|
+e2eg ege2 e2ge e2d2|e2g2 ege2 e2ge e2d2|
 
 ```ruby
 #- Bells
@@ -172,13 +228,14 @@ end
 
 ```ruby
 #- Title structure
+offset = 0
+
 live_loop :main, delay: 0.01 do
   t = tick(:loop)
   puts t + offset
   sleep 4 * 4
 end
 
-offset = 0
 ##########################  0        8        16       24       32       40       48       56       64
 bell_amp     =  str_scale("|33334343|----6655|----6666|----6688|XXXX8876|XXXX8876|88888876|X7X7X786|6666----|", max: 0.2 )
 bell_shift   = str_select("|22111-1-|----11--|11111111|11111111|1111----|1111----|--------|1-1-1-1-|--------|", [0, -12, -24])
@@ -211,6 +268,17 @@ bass_shift   = str_select("|11112211|--------|--------|--11--12|--------|-------
 
 ```ruby
 #- Functions
+# ==> play_rhythm_sample.
+# ==> play_timed_synth.
+# ==> slide_timed_synth.
+# ==> str_scale.
+# ==> str_select.
+```
+
+### play_rhythm_sample
+
+```ruby
+#- play_rhythm_sample
 define :play_rhythm_sample do |samp, duration, rhythm, amp: 1|
   for i in 0..rhythm.length-1
     s = rhythm[i]
@@ -228,21 +296,36 @@ define :play_rhythm_sample do |samp, duration, rhythm, amp: 1|
     end
   end
 end
+```
 
-define :slide_timed_synth do |syn, notes, times, shift: 0|
-  for i in 0..notes.length-1
-    control syn, note: notes[i] + shift
-    sleep times[i]
-  end
-end
+### play_timed_synth
 
+```ruby
+#- play_timed_synth
 define :play_timed_synth do |notes, times, shift: 0|
   for i in 0..notes.length-1
     play notes[i] + shift
     sleep times[i]
   end
 end
+```
 
+### slide_timed_synth
+
+```ruby
+#- slide_timed_synth
+define :slide_timed_synth do |syn, notes, times, shift: 0|
+  for i in 0..notes.length-1
+    control syn, note: notes[i] + shift
+    sleep times[i]
+  end
+end
+```
+
+### str_scale
+
+```ruby
+#- str_scale
 define :str_scale do |str, min: 0, max: 1|
   str.chars.filter_map{|s|
     if s == "|"
@@ -256,7 +339,12 @@ define :str_scale do |str, min: 0, max: 1|
     end
   }.ring
 end
+```
 
+### str_select
+
+```ruby
+#- str_select
 define :str_select do |str, values|
   str.chars.filter_map{|s|
     if s == "|"
