@@ -9,7 +9,7 @@ jobs:
   publish:
     name: Publish book
     env:
-      YARNER_VERSION: 0.5.2
+      YARNER_VERSION: 0.6.0
       YARNER_BL_VERSION: 0.1.2
       MDBOOK_VERSION: 0.4.7
       MDBOOK_TOC_VERSION: 0.6.1
