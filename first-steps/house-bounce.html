@@ -1,0 +1,743 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js rust">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>House bounce - Sonic Pi - Literate Programming</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Coding for Sonic PI using Yarner Literate Programming">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../css-js/custom.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../first-steps.html"><strong aria-hidden="true">1.</strong> First steps</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../first-steps/house-bounce.html" class="active"><strong aria-hidden="true">1.1.</strong> House bounce</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Sonic Pi - Literate Programming</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/mlange-42/Sonic-LP" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="house-bounce"><a class="header" href="#house-bounce">House bounce</a></h1>
+<p>After discovering <a href="https://sonic-pi.net/">Sonic Pi</a> a week before,
+and some playing with it in Live Coding, I decided to code a first complete track.</p>
+<p>Starting from a simple bass line, it developed into a bouncy House tune. Listen here:</p>
+<iframe width="100%" height="165" scrolling="no" frameborder="no" allow="autoplay" src="https://thefuture.fm/track/862/house-experiment-001-sonic-pi/embed"></iframe>
+<p>The track uses only built-in samples and synths of Sonic Pi, so the code should
+work without any additional setup.</p>
+<p>The extracted code for direct use in Sonic Pi can be found in the GitHub repository:
+<a href="https://github.com/mlange-42/Sonic-LP/blob/main/code/House/HouseBounce.rb">code/House/HouseBounce.rb</a>.</p>
+<p><strong>Contents</strong></p>
+<ul>
+<li><a href="#tempo">Tempo</a></li>
+<li><a href="#instruments">Instruments</a>
+<ul>
+<li><a href="#drums">Drums</a></li>
+<li><a href="#bass">Bass</a></li>
+<li><a href="#bells">Bells</a></li>
+</ul>
+</li>
+<li><a href="#title-structure">Title structure</a></li>
+<li><a href="#file-structure">File structure</a></li>
+<li><a href="#functions">Functions</a>
+<ul>
+<li><a href="#play_rhythm_sample">play_rhythm_sample</a></li>
+<li><a href="#play_timed_synth">play_timed_synth</a></li>
+<li><a href="#slide_timed_synth">slide_timed_synth</a></li>
+<li><a href="#str_scale">str_scale</a></li>
+<li><a href="#str_select">str_select</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="tempo"><a class="header" href="#tempo">Tempo</a></h2>
+<p>With 125 BMP, I decided to go for the upper range of typical House tracks.</p>
+<p><a name="yarner-block-setup" id="yarner-block-setup"></a></p>
+<pre><code class="language-ruby">#- Setup
+use_bpm 125
+</code></pre>
+<blockquote>
+<p>Usage: <a href="#yarner-block-house-housebounce-rb"><code>House/HouseBounce.rb</code></a></p>
+</blockquote>
+<h2 id="instruments"><a class="header" href="#instruments">Instruments</a></h2>
+<p>The track is played by a rather small combo of instruments:
+drums, a bass line, and playful bell or xylophone-like melody.</p>
+<p>Notes and Sonic Pi code for each of the instruments are presented and explained
+in the following sections.</p>
+<h3 id="drums"><a class="header" href="#drums">Drums</a></h3>
+<p>I used a standard House drums arrangement with the bass drum playing a
+4-to-the-floor rhythm. The snare plays on every second beat, while cymbals
+play between beats.</p>
+<p>X: 1
+M: 4/4
+L: 1/16
+K: perc
+U:n=!style=x!
+V: BD name=&quot;Bass drum&quot;
+V: SN name=&quot;Snare&quot;
+V: CY name=&quot;Cymbal&quot;
+[V:BD] F4 F4 F4 F4|
+[V:SN] z4 nG4 z4 nG4|
+[V:CY] z2 nf2 z2 nf2 z2 nf2 z2 nf2|</p>
+<p>In the code, I use the function <a href="#play_rhythm_sample">play_rhythm_sample</a>,
+which allows me to easily define drum patterns as strings of e.g. 8th notes.
+The bass drum pattern is commented out, as we trigger beats individually (see below).</p>
+<p><a name="yarner-block-drum-rhythms" id="yarner-block-drum-rhythms"></a></p>
+<pre><code class="language-ruby">#- Drum rhythms
+# bd_rhythm =    &quot;x-x-x-x-&quot;
+drum_rhythm =    &quot;--x---x-&quot;
+cymbals_rhythm = &quot;-x-x-x-x&quot;
+</code></pre>
+<blockquote>
+<p>Usage: <a href="#yarner-block-house-housebounce-rb"><code>House/HouseBounce.rb</code></a></p>
+</blockquote>
+<p>Next, I present the code that actually plays these patterns.
+I use a <code>live_loop</code> for each instrument.</p>
+<p><a name="yarner-block-drums" id="yarner-block-drums"></a></p>
+<pre><code class="language-ruby">#- Drums
+# ==&gt; Bass drum.
+# ==&gt; Snare.
+# ==&gt; Cymbal.
+</code></pre>
+<blockquote>
+<p>Usage: <a href="#yarner-block-house-housebounce-rb"><code>House/HouseBounce.rb</code></a><br />
+Macros: <a href="#yarner-block-bass-drum"><code>Bass drum</code></a> <a href="#yarner-block-snare"><code>Snare</code></a> <a href="#yarner-block-cymbal"><code>Cymbal</code></a></p>
+</blockquote>
+<p>At the start of each live loops,
+you will see lines like <code>amp = bd_amp[tick + offset]</code>.
+Here, we get parameters like the volume of the instrument over the course of the track.
+Section <a href="#title-structure">Title structure</a> presents how this is actually implemented.</p>
+<p>For the bass drum, I use the sample <code>:bd_haus</code>. It is played every quarter note,
+with a low pass filter. The filter is set to a higher cutoff on every second beat.</p>
+<p>Additionally, a high pass filter is used to prevent overload in combination
+with the bass line.</p>
+<p><a name="yarner-block-bass-drum" id="yarner-block-bass-drum"></a></p>
+<pre><code class="language-ruby">#- Bass drum
+live_loop :bd, sync: :main do
+  amp = bd_amp[tick + offset]
+  8.times do
+    sample :bd_haus, lpf: 90, hpf: 45, amp: amp
+    sleep 1
+    sample :bd_haus, lpf: 110, hpf: 45, amp: amp
+    sleep 1
+  end
+end
+
+</code></pre>
+<blockquote>
+<p>Usage: <a href="#yarner-block-drums"><code>Drums</code></a></p>
+</blockquote>
+<p>As a snare replacement, I use the sample <code>:elec_twip</code>, and play the
+pattern presented above. To make the sound more snappy, I cut off
+the release part of the sample (with <code>finish: 0.15</code>)</p>
+<p><a name="yarner-block-snare" id="yarner-block-snare"></a></p>
+<pre><code class="language-ruby">#- Snare
+live_loop :drums, sync: :main do
+  amp = drums_amp[tick + offset]
+  4.times do
+    use_sample_defaults finish: 0.15
+    play_rhythm_sample :elec_twip, 0.5, drum_rhythm, amp: amp
+  end
+end
+</code></pre>
+<blockquote>
+<p>Usage: <a href="#yarner-block-drums"><code>Drums</code></a></p>
+</blockquote>
+<p>Finally, I used the closed cymbal sample <code>:drum_cymbal_closed</code> to play the
+respective pattern (i.e. between beats). Again, I cut the release part for a
+more snappy sound. Further, I added a high pass filter.</p>
+<p><a name="yarner-block-cymbal" id="yarner-block-cymbal"></a></p>
+<pre><code class="language-ruby">#- Cymbal
+live_loop :cymbal, sync: :main do
+  amp = cymbal_amp[tick + offset]
+  4.times do
+    use_sample_defaults hpf: 100, finish: 0.15, amp: amp
+    play_rhythm_sample :drum_cymbal_closed, 0.5, cymbals_rhythm, amp: amp
+  end
+end
+</code></pre>
+<blockquote>
+<p>Usage: <a href="#yarner-block-drums"><code>Drums</code></a></p>
+</blockquote>
+<h3 id="bass"><a class="header" href="#bass">Bass</a></h3>
+<p>After some playing with the F minor pentatonic scale, I came up with this base
+melody for the bass line:</p>
+<p>X: 1
+M: 4/4
+L: 1/4
+E4|B4|d3B1|G2A2|\
+E4|B4|d3B1|A2G2|</p>
+<p>To make the track more interesting, I modified the above sequence to have two
+alternatives to play. First, I added an octave jump to the two half notes in every
+4th bar:</p>
+<p>X: 1
+M: 4/4
+L: 1/4
+E4|B4|d3B1|GgAa|\
+E4|B4|d3B1|AaGg|</p>
+<p>For a 3rd melody, I added similar jumps to the whole notes:</p>
+<p>X: 1
+M: 4/4
+L: 1/4
+E3e|B3b|d3B|GgAa|\
+E3e|B3b|d3B|AaGg|</p>
+<p>Here, the melodies are expressed in Sonic Pi notes and durations (in beats):</p>
+<p><a name="yarner-block-bass-notes" id="yarner-block-bass-notes"></a></p>
+<pre><code class="language-ruby">#- Bass notes
+bass_delay = 0.06
+bass_notes = [
+  [
+    [[:e1, :b1, :d2, :b1, :g1, :a1],     [4 - bass_delay, 4, 3, 1, 2, 2]],
+    [[:e1, :b1, :d2, :b1, :a1, :g1],     [4 - bass_delay, 4, 3, 1, 2, 2]]
+  ],
+  [
+    [[:e1, :b1, :d2, :b1, :g1, :g2, :a1, :a2],     [4 - bass_delay, 4, 3, 1, 1, 1, 1, 1]],
+    [[:e1, :b1, :d2, :b1, :a1, :a2, :g1, :g2],     [4 - bass_delay, 4, 3, 1, 1, 1, 1, 1]]
+  ],
+  [
+    [[:e1, :e2, :b1, :b2, :d2, :b1, :g1, :g2, :a1, :a2],     [3 - bass_delay, 1, 3, 1, 3, 1, 1, 1, 1, 1]],
+    [[:e1, :e2, :b1, :b2, :d2, :b1, :a1, :a2, :g1, :g2],     [3 - bass_delay, 1, 3, 1, 3, 1, 1, 1, 1, 1]]
+  ]
+]
+</code></pre>
+<blockquote>
+<p>Usage: <a href="#yarner-block-house-housebounce-rb"><code>House/HouseBounce.rb</code></a></p>
+</blockquote>
+<p>Note the <code>bass_delay</code>. This was necessary as, for some reason, changing the note
+of the bass synth (see below) is delayed by approximately 0.03 seconds
+(or 0.06 beats). To compensate for that, the first note of the bass melody is slightly shortened.</p>
+<p>I used the <code>:dsaw</code> synth for the bass line, routed through a slicer FX.</p>
+<p><a name="yarner-block-bass" id="yarner-block-bass"></a></p>
+<pre><code class="language-ruby">#- Bass
+live_loop :bass, sync: :main do
+  t = tick * 2 + offset
+  amp = bass_amp[t]
+  amp_end = bass_amp[t + 1]
+
+  amp_min = bass_min_amp[t]
+  shift = bass_shift[t]
+  cutoff = bass_cutoff[t]
+  melody = bass_melody[t]
+
+  with_fx :slicer, phase: 0.5, smooth_down: 0.05, amp_min: amp_min do |sn|
+    with_synth :dsaw do
+      use_synth_defaults amp: amp, detune: 12, cutoff_min: 45 #, attack: 0.02
+
+      m = bass_notes[melody][0]
+      syn = play m[0][0] + shift, cutoff: 80, res: 0.75, sustain: 16, release: 0
+      at do
+        sleep m[1][0]
+        slide_timed_synth syn, m[0][1..], m[1][1..], shift: shift
+      end
+
+      sleep 0.25
+      control syn, cutoff: 92, cutoff_slide: 16, amp: amp_end, amp_slide: 31.75
+      sleep 15.75
+
+
+      m = bass_notes[melody][1]
+      syn = play m[0][0] + shift, cutoff: 80, res: 0.75, sustain: 16, release: 0
+      at do
+        sleep m[1][0]
+        slide_timed_synth syn, m[0][1..], m[1][1..], shift: shift
+      end
+
+      sleep 0.25
+      control syn, cutoff: 80, cutoff_slide: 0
+      control syn, cutoff: cutoff, cutoff_slide: 16
+      sleep 7.75
+
+      control sn, phase: 0.25
+      sleep 6
+      control sn, phase: 0.333
+      sleep 2
+    end
+  end
+end
+</code></pre>
+<blockquote>
+<p>Usage: <a href="#yarner-block-house-housebounce-rb"><code>House/HouseBounce.rb</code></a></p>
+</blockquote>
+<p>After each melody part is triggered and released to its own thread, I modulate
+the cutoff value of the synth, as well as the slicer's phase. Using phases of
+0.5, 0.25 and 0.333 beats (8th, 16th and 12th notes, respectively),
+the bass line turns into something like this:</p>
+<p>X: 1
+M: 4/4
+L: 1/16
+E2E2 E2E2 E2E2 E2E2|B2B2 B2B2 B2B2 B2B2|d2d2 d2d2 d2d2 B2B2|G2G2 G2G2 A2A2 A2A2|
+E2E2 E2E2 E2E2 E2E2|B2B2 B2B2 B2B2 B2B2|dddd dddd dddd BBBB|AAAA AAAA ((3GGG) ((3GGG)|</p>
+<p>With the slicer's <code>amp_min</code> parameter, we can switch between the continuous and
+the &quot;wobbled&quot; melodies during the track.</p>
+<h3 id="bells"><a class="header" href="#bells">Bells</a></h3>
+<p>To add some interest in the upper tonal range, and to make the track more playful,
+I decided to add some bell- or xylophone-like sounds.
+After experimenting with some random melodies from the same scale as the
+bass line (F minor pentatonic), I came up with this one:</p>
+<p>X: 1
+M: 4/4
+L: 1/16
+e2eg ege2 e2ge e2d2|e2g2 ege2 e2ge e2d2|</p>
+<p>While playing with the bass wobble and the bells, I realized that the triplet
+wobble at the end of each bass loop conflicts with the quarter structure of the
+bell melody. Thus, I built a variation of the pattern with a simplified end:</p>
+<p>X: 1
+M: 4/4
+L: 1/16
+e2eg ege2 e2ge e2d2|e2g2 ege2 e4 g4|</p>
+<p>Here are the bell melodies expressed for Sonic Pi:</p>
+<p><a name="yarner-block-bell-notes" id="yarner-block-bell-notes"></a></p>
+<pre><code class="language-ruby">#- Bell notes
+bell_notes = [
+  [
+    [[:e5,  :e5,  :g5,  :e5,  :g5, :e5], [0.5, 0.25, 0.25, 0.25, 0.25, 0.5]],
+    [[:e5,  :g5,  :e5,  :e5,  :d5],      [0.5, 0.25, 0.25,  0.5,  0.5]],
+    [[:e5,  :g5,  :e5,  :g5,  :e5],      [0.5, 0.5, 0.25, 0.25, 0.5]],
+    [[:e5,  :g5,  :e5,  :e5,  :d5],      [0.5, 0.25, 0.25,  0.5,  0.5]]
+  ],
+  [
+    [[:e5,  :e5,  :g5,  :e5,  :g5, :e5], [0.5, 0.25, 0.25, 0.25, 0.25, 0.5]],
+    [[:e5,  :g5,  :e5,  :e5,  :d5],      [0.5, 0.25, 0.25,  0.5,  0.5]],
+    [[:e5,  :g5,  :e5,  :g5,  :e5],      [0.5, 0.5, 0.25, 0.25, 0.5]],
+    [[:e5, :g5],      [1, 1]]
+  ]
+]
+</code></pre>
+<blockquote>
+<p>Usage: <a href="#yarner-block-house-housebounce-rb"><code>House/HouseBounce.rb</code></a></p>
+</blockquote>
+<p>I used the <code>:pretty_bell</code> synth, with an echo effect that is modulated over
+the course of the track.
+I use the function <a href="#play_timed_synth">play_timed_synth</a> to conveniently play
+the above melody.</p>
+<p>See section <a href="#title-structure">Title structure</a> to see how the melody to play,
+as well as <code>shift</code> and <code>echo</code>, are modulated through the track.</p>
+<p><a name="yarner-block-bells" id="yarner-block-bells"></a></p>
+<pre><code class="language-ruby">#- Bells
+live_loop :bell, sync: :main do
+  amp = bell_amp[tick + offset]
+
+  if amp &gt; 0
+    shift = bell_shift[look + offset]
+    echo = bell_echo[look + offset]
+    melody = bell_melody[look + offset]
+    with_fx :echo, phase: 0.25, decay: 0.5, mix: echo, amp: 1 do |fx|
+      with_synth :pretty_bell do
+        use_synth_defaults amp: amp, release: 0.2
+        for idx in melody
+          for m in bell_notes[idx]
+            play_timed_synth m[0], m[1], shift: shift
+          end
+        end
+      end
+    end
+  else
+    sleep 16
+  end
+end
+</code></pre>
+<blockquote>
+<p>Usage: <a href="#yarner-block-house-housebounce-rb"><code>House/HouseBounce.rb</code></a></p>
+</blockquote>
+<p>Please note that the condition <code>if amp &gt; 0</code> is necessary here due to a bug in the
+<code>:pretty_bell</code> synth, which should be fixed in the next Sonic Pi release (3.3.2).</p>
+<h2 id="title-structure"><a class="header" href="#title-structure">Title structure</a></h2>
+<p>To keep everything in sync, I use the loop <code>:main</code>, which triggers syncing of
+all other loops every 16 beats, or 4 bars. The <code>offset</code> variable can be used
+to start the track at a certain point, for tweaking.</p>
+<p>The <code>:main</code> loop starts with a short delay to allow the other loops which are
+synchronized with it to start before the first cue.</p>
+<p><a name="yarner-block-main-loop" id="yarner-block-main-loop"></a></p>
+<pre><code class="language-ruby">#- Main loop
+offset = 0
+
+live_loop :main, delay: 0.01 do
+  t = tick(:loop)
+  puts t + offset
+  sleep 4 * 4
+end
+</code></pre>
+<blockquote>
+<p>Usage: <a href="#yarner-block-house-housebounce-rb"><code>House/HouseBounce.rb</code></a></p>
+</blockquote>
+<p>To conveniently steer different parameters of the instruments, like volume,
+effects, etc., I implemented the functions <a href="#str_scale">str_scale</a> and
+<a href="#str_select">str_select</a>, which convert strings to arrays and allow for the
+compact representation shown below.</p>
+<p>Each character corresponds to one iteration of loop <code>:main</code>, i.e. 4 bars.
+Each section of 8 characters corresponds to one whole &quot;arc of suspense&quot; of 32 bars.
+These sections can also be seen as the building blocks of the track.</p>
+<p>For the lines with <code>str_scale</code>, the characters <code>-</code>, <code>1</code>, <code>2</code>, ..., <code>X</code> stand for
+0%, 10%, 20%, ..., 100% of the maximum value. As an example, <code>bell_amp</code> is used to
+regulate the volume of the bell melody, starting with 30% of the maximum.
+Here, the maximum is 0.3, so the bell starts with <code>amp: 0.09</code> (0.3 * 0.3).</p>
+<p>For the lines with <code>str_select</code>, the characters <code>-</code>, <code>1</code>, ... correspond to
+zero-based indices into the array given as additional function parameter.</p>
+<p><a name="yarner-block-title-structure" id="yarner-block-title-structure"></a></p>
+<pre><code class="language-ruby">#- Title structure
+##########################  0        8        16       24       32       40       48       56       64
+bell_amp     =  str_scale(&quot;|33334343|----6655|----6666|----6688|XX668854|XXXX8876|8888XX76|X7X7X786|6666----|&quot;, max: 0.3 )
+bell_shift   = str_select(&quot;|22111-11|----11--|11111111|11111111|1111----|1111----|----11--|1-1-1-1-|--------|&quot;, [0, -12, -24])
+bell_echo    =  str_scale(&quot;|13375355|11111111|33333333|33333358|35353535|35353535|35355555|55555555|5688----|&quot;)
+bell_melody  = str_select(&quot;|--------|-------1|-----1-1|-----1-1|-1-1-1-1|-1-1-1-1|-1-1-1-1|-------1|---1----|&quot;, [[0, 0], [0, 1]])
+
+bd_amp       =  str_scale(&quot;|------11|XXXXXXX7|XXXXXXX7|--223456|XXXXXXX6|XXXXXXXX|XXXXXXXX|XXXX9988|--------|&quot;, max: 0.8)
+drums_amp    =  str_scale(&quot;|--112222|33333333|33333333|11111112|55555555|55555555|55555555|55555555|--------|&quot;)
+
+cymbal_amp   =  str_scale(&quot;|----2233|44444444|44444443|------22|44444444|44444444|44444444|33333333|--------|&quot;)
+
+bass_amp     =  str_scale(&quot;|----1111|33333333|88888886|55555555|99999999|99999999|99999999|88667765|41------|&quot;, max: 0.7)
+bass_cutoff  = str_select(&quot;|------11|------11|--------|------11|------11|------11|--11--11|--------|--------|&quot;, [92, 104])
+bass_min_amp =  str_scale(&quot;|XXXXXXXX|99997777|33334477|XXXXXX77|22332244|22443377|22443377|88889999|XXXXXXXX|&quot;)
+bass_shift   = str_select(&quot;|11112211|--------|--------|------12|--------|--------|----11--|--11--11|--------|&quot;, [12, 24, 36])
+bass_melody  = str_select(&quot;|--------|------11|------22|--------|------11|--22--22|------22|--------|--------|&quot;, [0, 1, 2])
+</code></pre>
+<blockquote>
+<p>Usage: <a href="#yarner-block-house-housebounce-rb"><code>House/HouseBounce.rb</code></a></p>
+</blockquote>
+<h2 id="file-structure"><a class="header" href="#file-structure">File structure</a></h2>
+<p>The code blocks of this document are arranged to a complete Sonic Pi program
+by inserting them in the output file in this order:</p>
+<p><a name="yarner-block-house-housebounce-rb" id="yarner-block-house-housebounce-rb"></a></p>
+<pre><code class="language-ruby">#- file:House/HouseBounce.rb
+# ==&gt; Setup.
+# ==&gt; Functions.
+# ==&gt; Main loop.
+# ==&gt; Title structure.
+# ==&gt; Drum rhythms.
+# ==&gt; Bass notes.
+# ==&gt; Bell notes.
+# ==&gt; Drums.
+# ==&gt; Bass.
+# ==&gt; Bells.
+</code></pre>
+<blockquote>
+<p>Macros: <a href="#yarner-block-setup"><code>Setup</code></a> <a href="#yarner-block-functions"><code>Functions</code></a> <a href="#yarner-block-main-loop"><code>Main loop</code></a> <a href="#yarner-block-title-structure"><code>Title structure</code></a> <a href="#yarner-block-drum-rhythms"><code>Drum rhythms</code></a> <a href="#yarner-block-bass-notes"><code>Bass notes</code></a> <a href="#yarner-block-bell-notes"><code>Bell notes</code></a> <a href="#yarner-block-drums"><code>Drums</code></a> <a href="#yarner-block-bass"><code>Bass</code></a> <a href="#yarner-block-bells"><code>Bells</code></a></p>
+</blockquote>
+<p>This is done by the Literate Programming tool <a href="https://github.com/mlange-42/yarner">Yarner</a>,
+by running it in the project's root directory. Alternatively, the extracted
+can be found in the GitHub repository:
+<a href="https://github.com/mlange-42/Sonic-LP/blob/main/code/House/HouseBounce.rb">code/House/HouseBounce.rb</a>.</p>
+<h2 id="functions"><a class="header" href="#functions">Functions</a></h2>
+<p>A number of functions are required, to play melodies as well as to steer instruments
+using a compact string representation.</p>
+<p><a name="yarner-block-functions" id="yarner-block-functions"></a></p>
+<pre><code class="language-ruby">#- Functions
+# ==&gt; play_rhythm_sample.
+# ==&gt; play_timed_synth.
+# ==&gt; slide_timed_synth.
+# ==&gt; str_scale.
+# ==&gt; str_select.
+</code></pre>
+<blockquote>
+<p>Usage: <a href="#yarner-block-house-housebounce-rb"><code>House/HouseBounce.rb</code></a><br />
+Macros: <a href="#yarner-block-play-rhythm-sample"><code>play_rhythm_sample</code></a> <a href="#yarner-block-play-timed-synth"><code>play_timed_synth</code></a> <a href="#yarner-block-slide-timed-synth"><code>slide_timed_synth</code></a> <a href="#yarner-block-str-scale"><code>str_scale</code></a> <a href="#yarner-block-str-select"><code>str_select</code></a></p>
+</blockquote>
+<h3 id="play_rhythm_sample"><a class="header" href="#play_rhythm_sample">play_rhythm_sample</a></h3>
+<p>Plays a rhythm from a string pattern.</p>
+<p><a name="yarner-block-play-rhythm-sample" id="yarner-block-play-rhythm-sample"></a></p>
+<pre><code class="language-ruby">#- play_rhythm_sample
+define :play_rhythm_sample do |samp, duration, rhythm, amp: 1|
+  for i in 0..rhythm.length-1
+    s = rhythm[i]
+    if (s == &quot;|&quot;) or (s == &quot; &quot;)
+      # Bar line, do nothing
+    elsif s == &quot;-&quot;
+      sleep duration
+    elsif (s == &quot;x&quot;) or (s == &quot;X&quot;)
+      sample samp, amp: amp
+      sleep duration
+    else
+      a = amp * Integer(s) / 10.0
+      sample samp, amp: a
+      sleep duration
+    end
+  end
+end
+</code></pre>
+<blockquote>
+<p>Usage: <a href="#yarner-block-functions"><code>Functions</code></a></p>
+</blockquote>
+<h3 id="play_timed_synth"><a class="header" href="#play_timed_synth">play_timed_synth</a></h3>
+<p>Plays a melody from an array of notes and an array sleep times.</p>
+<p><a name="yarner-block-play-timed-synth" id="yarner-block-play-timed-synth"></a></p>
+<pre><code class="language-ruby">#- play_timed_synth
+define :play_timed_synth do |notes, times, shift: 0|
+  for i in 0..notes.length-1
+    play notes[i] + shift
+    sleep times[i]
+  end
+end
+</code></pre>
+<blockquote>
+<p>Usage: <a href="#yarner-block-functions"><code>Functions</code></a></p>
+</blockquote>
+<h3 id="slide_timed_synth"><a class="header" href="#slide_timed_synth">slide_timed_synth</a></h3>
+<p>Plays a melody from an array of notes and an array sleep times, controlling the
+synth's note rather then playing multiple times.</p>
+<p><a name="yarner-block-slide-timed-synth" id="yarner-block-slide-timed-synth"></a></p>
+<pre><code class="language-ruby">#- slide_timed_synth
+define :slide_timed_synth do |syn, notes, times, shift: 0|
+  amp = (current_synth_defaults || {amp: 1})[:amp] || 1
+  for i in 0..notes.length-1
+    control syn, note: notes[i] + shift
+    sleep times[i]
+  end
+end
+</code></pre>
+<blockquote>
+<p>Usage: <a href="#yarner-block-functions"><code>Functions</code></a></p>
+</blockquote>
+<h3 id="str_scale"><a class="header" href="#str_scale">str_scale</a></h3>
+<p>Creates an array of floats from a sting pattern.</p>
+<p><a name="yarner-block-str-scale" id="yarner-block-str-scale"></a></p>
+<pre><code class="language-ruby">#- str_scale
+define :str_scale do |str, min: 0, max: 1|
+  str.chars.filter_map{|s|
+    if (s == &quot;|&quot;) or (s == &quot; &quot;)
+      # Bar line, do nothing
+    elsif s == &quot;-&quot;
+      min
+    elsif (s == &quot;x&quot;) or (s == &quot;X&quot;)
+      max
+    else
+      min + (max - min) * Integer(s) / 10.0
+    end
+  }.ring
+end
+</code></pre>
+<blockquote>
+<p>Usage: <a href="#yarner-block-functions"><code>Functions</code></a></p>
+</blockquote>
+<h3 id="str_select"><a class="header" href="#str_select">str_select</a></h3>
+<p>Creates an array of values from a sting pattern.</p>
+<p><a name="yarner-block-str-select" id="yarner-block-str-select"></a></p>
+<pre><code class="language-ruby">#- str_select
+define :str_select do |str, values|
+  str.chars.filter_map{|s|
+    if (s == &quot;|&quot;) or s == &quot; &quot;
+      # Bar line, do nothing
+    elsif s == &quot;-&quot;
+      values[0]
+    else
+      values[Integer(s)]
+    end
+  }.ring
+end
+</code></pre>
+<blockquote>
+<p>Usage: <a href="#yarner-block-functions"><code>Functions</code></a></p>
+</blockquote>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../first-steps.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../first-steps.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../css-js/abcjs-plugin-min.js"></script>
+        
+
+        
+
+    </body>
+</html>
