@@ -10,6 +10,9 @@ Starting from a simple bass line, it developed into a bouncy House tune. Listen 
 The track uses only built-in samples and synths of Sonic Pi, so the code should
 work without any additional setup.
 
+The extracted code for direct use in Sonic Pi can be found in the GitHub repository:
+[code/House/HouseBounce.rb](https://github.com/mlange-42/Sonic-LP/blob/main/code/House/HouseBounce.rb).
+
 **Contents**
 
 [[_TOC_]]
@@ -78,6 +81,9 @@ Section [Title structure](#title-structure) presents how this is actually implem
 For the bass drum, I use the sample `:bd_haus`. It is played every quarter note,
 with a low pass filter. The filter is set to a higher cutoff on every second beat.
 
+Additionally, a high pass filter is used to prevent overload in combination
+with the bass line.
+
 ```ruby
 #- Bass drum
 live_loop :bd, sync: :main do
@@ -94,7 +100,7 @@ end
 
 As a snare replacement, I use the sample `:elec_twip`, and play the
 pattern presented above. To make the sound more snappy, I cut off
-the release part of the sample (with `finish: 0.1`)
+the release part of the sample (with `finish: 0.15`)
 
 ```ruby
 #- Snare
@@ -109,7 +115,7 @@ end
 
 Finally, I used the closed cymbal sample `:drum_cymbal_closed` to play the
 respective pattern (i.e. between beats). Again, I cut the release part for a
-more snappy sound,. Further, I added a high pass filter.
+more snappy sound. Further, I added a high pass filter.
 
 ```ruby
 #- Cymbal
@@ -134,7 +140,7 @@ E4|B4|d3B1|G2A2|\\
 E4|B4|d3B1|A2G2|
 
 To make the track more interesting, I modified the above sequence to have two
-alternatives to play. First I added a octave jump to the two half notes in every
+alternatives to play. First, I added an octave jump to the two half notes in every
 4th bar:
 
 X: 1
@@ -143,7 +149,7 @@ L: 1/4
 E4|B4|d3B1|GgAa|\\
 E4|B4|d3B1|AaGg|
 
-For a 3rd melody, I added similar to the whole notes:
+For a 3rd melody, I added similar jumps to the whole notes:
 
 X: 1
 M: 4/4
@@ -171,6 +177,10 @@ bass_notes = [
   ]
 ]
 ```
+
+Note the `bass_delay`. This was necessary as, for some reason, changing the note
+of the bass synth (see below) is delayed by approximately 0.03 seconds
+(or 0.06 beats). To compensate for that, the first note of the bass melody is slightly shortened.
 
 I used the `:dsaw` synth for the bass line, routed through a slicer FX.
 
@@ -226,7 +236,7 @@ end
 After each melody part is triggered and released to its own thread, I modulate
 the cutoff value of the synth, as well as the slicer's phase. Using phases of
 0.5, 0.25 and 0.333 beats (8th, 16th and 12th notes, respectively),
-we get something like this:
+the bass line turns into something like this:
 
 X: 1
 M: 4/4
@@ -234,8 +244,8 @@ L: 1/16
 E2E2 E2E2 E2E2 E2E2|B2B2 B2B2 B2B2 B2B2|d2d2 d2d2 d2d2 B2B2|G2G2 G2G2 A2A2 A2A2|
 E2E2 E2E2 E2E2 E2E2|B2B2 B2B2 B2B2 B2B2|dddd dddd dddd BBBB|AAAA AAAA ((3GGG) ((3GGG)|
 
-With the slicer's `amp_min` parameter, we can smoothly transition between the
-continuous and the "wobbled" melodies.
+With the slicer's `amp_min` parameter, we can switch between the continuous and
+the "wobbled" melodies during the track.
 
 ### Bells
 
@@ -283,8 +293,8 @@ the course of the track.
 I use the function [play_timed_synth](#play_timed_synth) to conveniently play
 the above melody.
 
-See section [Title structure](#title-structure) to see how the melody to play
-and `shift` and `echo` are modulated over the course of the track.
+See section [Title structure](#title-structure) to see how the melody to play,
+as well as `shift` and `echo`, are modulated through the track.
 
 ```ruby
 #- Bells
@@ -320,6 +330,9 @@ To keep everything in sync, I use the loop `:main`, which triggers syncing of
 all other loops every 16 beats, or 4 bars. The `offset` variable can be used
 to start the track at a certain point, for tweaking.
 
+The `:main` loop starts with a short delay to allow the other loops which are
+synchronized with it to start before the first cue.
+
 ```ruby
 #- Main loop
 offset = 0
@@ -333,12 +346,20 @@ end
 
 To conveniently steer different parameters of the instruments, like volume,
 effects, etc., I implemented the functions [str_scale](#str_scale) and
-[str_select](#str_select), convert strings to arrays and allow for the compact
-representation shown below.
+[str_select](#str_select), which convert strings to arrays and allow for the
+compact representation shown below.
 
 Each character corresponds to one iteration of loop `:main`, i.e. 4 bars.
 Each section of 8 characters corresponds to one whole "arc of suspense" of 32 bars.
-These sections can also be seen as the building blocks of the title.
+These sections can also be seen as the building blocks of the track.
+
+For the lines with `str_scale`, the characters `-`, `1`, `2`, ..., `X` stand for
+0%, 10%, 20%, ..., 100% of the maximum value. As an example, `bell_amp` is used to
+regulate the volume of the bell melody, starting with 30% of the maximum.
+Here, the maximum is 0.3, so the bell starts with `amp: 0.09` (0.3 * 0.3).
+
+For the lines with `str_select`, the characters `-`, `1`, ... correspond to
+zero-based indices into the array given as additional function parameter.
 
 ```ruby
 #- Title structure
@@ -378,6 +399,12 @@ by inserting them in the output file in this order:
 # ==> Bass.
 # ==> Bells.
 ```
+
+This is done by the Literate Programming tool [Yarner](https://github.com/mlange-42/yarner),
+by running it in the project's root directory. Alternatively, the extracted
+can be found in the GitHub repository:
+[code/House/HouseBounce.rb](https://github.com/mlange-42/Sonic-LP/blob/main/code/House/HouseBounce.rb).
+
 
 ## Functions
 
